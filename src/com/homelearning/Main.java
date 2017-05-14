@@ -7,7 +7,7 @@ public class Main {
         IntegersCollection integers = new IntegersCollection();
         Random random = new Random();
         System.out.println(integers.size());
-        integers.add(10);
+        integers.add(null);
         integers.add(10);
         System.out.println(integers.size());
         for (int i = 0; i < 10; i++) {
@@ -22,7 +22,7 @@ public class Main {
         for (;integers.size() > 1;) {
             int rand = integers.get(random.nextInt(integers.size() - 1) + 1);
             System.out.println(integers);
-            System.out.println(integers.remove(rand));
+            System.out.println(integers.remove((Object)rand));
             System.out.println(integers);
             System.out.println(rand + " removed");
             System.out.println("Averange is " + integers.getAverange());

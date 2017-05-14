@@ -1,10 +1,8 @@
 package com.homelearning;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
-public class IntegersCollection implements Collection<Integer> {
+public class IntegersCollection implements List<Integer> {
     private static final int DEFAULT_SIZE = 16;
 
     private int size = 0;
@@ -20,6 +18,7 @@ public class IntegersCollection implements Collection<Integer> {
 
     @Override
     public boolean add(Integer integer) {
+        if (integer == null) return false;
         if (integers.length == size) {
             integers = Arrays.copyOf(integers, integers.length * 2);
         }
@@ -33,34 +32,50 @@ public class IntegersCollection implements Collection<Integer> {
 
     @Override
     public boolean remove(Object o) {
-        if (isEmpty()) return false;
-        if (contains(o)){
-            Integer[] resultIntegers = new Integer[integers.length];
-            int removedCount = 0;
-            for (int i = 0; i < size; i++) {
-                if (((Integer)(integers[i] - ((Integer)o*removedCount))).equals(o)) {
-                    removedCount++;
-                } else resultIntegers[i - removedCount] = integers[i];
-            }
-            size = size - removedCount;
-            for (int i = 0; i < size; i++) {
-                resultIntegers[i] = resultIntegers[i] - ((Integer) o)*removedCount;
-            }
-            integers = resultIntegers;
-        }
+        int index;
+        if (isEmpty() || !isCorrectType(o) || (index = indexOf(o)) == -1) return false;
+        remove(index);
         return true;
     }
 
-    public Integer getIndex(int value){
-        for (int i = 0; i < size; i++) {
-            if (integers[i] == value) return i;
+    @Override
+    public Integer remove(int index) {
+        rangeCheck(index);
+        int value = integers[index];
+        System.arraycopy(integers, index + 1, integers, index, size - index + 1);
+        size--;
+        for (int i = 0; i < size(); i++) {
+            integers[i] -= value;
+        }
+        return value;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        if (isCorrectType(o)){
+            for (int i = 0; i < size(); i++) {
+                if (integers[i].equals(o)) return i;
+            }
         }
         return -1;
     }
 
-    public Integer get(int index) throws IndexOutOfBoundsException{
-        if (index <= size - 1) return integers[index];
-        else throw new IndexOutOfBoundsException("Index is " + index + " size is " + size);
+    public Integer get(int index){
+        rangeCheck(index);
+        return integers[index];
+    }
+
+    private void rangeCheck(int index) {
+        if (index >= size) throw new IndexOutOfBoundsException(outOfBoundsMessage(index));
+    }
+
+    private String outOfBoundsMessage(int index) {
+        return "Index is " + index + " size is " + size;
+    }
+
+    @Override
+    public Integer set(int index, Integer element) {
+        return null;
     }
 
     public Integer getMaxValue(){
@@ -90,8 +105,33 @@ public class IntegersCollection implements Collection<Integer> {
         for (int i = 0; i < size; i++) {
             result += integers[i];
         }
-        result = result/(size - 1);
+        result = result/size;
         return result;
+    }
+
+    @Override
+    public void add(int index, Integer element) {
+
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<Integer> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<Integer> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<Integer> subList(int fromIndex, int toIndex) {
+        return null;
     }
 
     @Override
@@ -114,7 +154,7 @@ public class IntegersCollection implements Collection<Integer> {
     }
 
     private boolean isCorrectType(Object o) {
-        return o.getClass() == int.class || o.getClass() == Integer.class;
+        return o instanceof Integer;
     }
 
     @Override
@@ -150,6 +190,11 @@ public class IntegersCollection implements Collection<Integer> {
 
     @Override
     public boolean addAll(Collection<? extends Integer> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends Integer> c) {
         return false;
     }
 
