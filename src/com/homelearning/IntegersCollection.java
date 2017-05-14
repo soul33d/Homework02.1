@@ -13,7 +13,8 @@ public class IntegersCollection implements List<Integer> {
     }
 
     public IntegersCollection(int size) {
-        this.size = size;
+        if (size > 0) this.size = size;
+        else this.size = DEFAULT_SIZE;
     }
 
     @Override
