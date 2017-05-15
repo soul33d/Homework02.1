@@ -14,6 +14,7 @@
 Результатом работы должен быть отдельный репозиторий github/bitbucket с README файлом, который описывает задание, сам класс и содержит инструкции по запуску приложения.
 
 ##CollectionDemo demonstrates all required functional
+
 ##IntegersCollection description:
 `com.homelearning.IntegersCollection implements java.util.Collection<Integer>`
 
