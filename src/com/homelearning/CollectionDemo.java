@@ -14,11 +14,12 @@ public class CollectionDemo {
             integers.add(rand);
             System.out.println("Adding " + rand);
         }
+
         printIntegersInfo(integers);
         for (;integers.size() > 1;) {
             int rand = integers.get(random.nextInt(integers.size() - 1) + 1);
             System.out.println(integers);
-            System.out.println(integers.remove((Object)rand));
+            System.out.println(integers.remove(rand));
             System.out.println(rand + " removed");
             printIntegersInfo(integers);
         }
@@ -26,7 +27,7 @@ public class CollectionDemo {
 
     private static void printIntegersInfo(IntegersCollection integers) {
         System.out.println(integers);
-        System.out.println("Averange is " + integers.getAverange());
+        System.out.println("Average is " + integers.getAverage());
         System.out.println("Max value is " + integers.getMaxValue());
         System.out.println("Min value is " + integers.getMinValue());
         System.out.println("The size is " + integers.size());

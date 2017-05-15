@@ -1,8 +1,10 @@
 package com.homelearning;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
-public class IntegersCollection implements List<Integer> {
+public class IntegersCollection implements Collection<Integer> {
     private static final int DEFAULT_SIZE = 16;
 
     private int size = 0;
@@ -13,7 +15,7 @@ public class IntegersCollection implements List<Integer> {
     }
 
     public IntegersCollection(int size) {
-        if (size > 0) this.size = size;
+        if (size > DEFAULT_SIZE) this.size = size;
         else this.size = DEFAULT_SIZE;
     }
 
@@ -35,12 +37,12 @@ public class IntegersCollection implements List<Integer> {
     public boolean remove(Object o) {
         int index;
         if (isEmpty() || !isCorrectType(o) || (index = indexOf(o)) == -1) return false;
-        remove(index);
+        removeByIndex(index);
         return true;
     }
 
-    @Override
-    public Integer remove(int index) {
+
+    public Integer removeByIndex(int index) {
         rangeCheck(index);
         int value = integers[index];
         System.arraycopy(integers, index + 1, integers, index, size - index + 1);
@@ -51,7 +53,6 @@ public class IntegersCollection implements List<Integer> {
         return value;
     }
 
-    @Override
     public int indexOf(Object o) {
         if (isCorrectType(o)){
             for (int i = 0; i < size(); i++) {
@@ -74,11 +75,6 @@ public class IntegersCollection implements List<Integer> {
         return "Index is " + index + " size is " + size;
     }
 
-    @Override
-    public Integer set(int index, Integer element) {
-        return null;
-    }
-
     public Integer getMaxValue(){
         if (isEmpty()) return null;
         int max = Integer.MIN_VALUE;
@@ -99,7 +95,7 @@ public class IntegersCollection implements List<Integer> {
         return min;
     }
 
-    public Integer getAverange(){
+    public Integer getAverage(){
         if (isEmpty()) return null;
         if (size == 1) return integers[0];
         int result = 0;
@@ -108,31 +104,6 @@ public class IntegersCollection implements List<Integer> {
         }
         result = result/size;
         return result;
-    }
-
-    @Override
-    public void add(int index, Integer element) {
-
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<Integer> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<Integer> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<Integer> subList(int fromIndex, int toIndex) {
-        return null;
     }
 
     @Override
@@ -164,7 +135,7 @@ public class IntegersCollection implements List<Integer> {
             private int count = 0;
             @Override
             public boolean hasNext() {
-                return size < count + 1;
+                return size > count;
             }
 
             @Override
@@ -191,11 +162,6 @@ public class IntegersCollection implements List<Integer> {
 
     @Override
     public boolean addAll(Collection<? extends Integer> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends Integer> c) {
         return false;
     }
 
