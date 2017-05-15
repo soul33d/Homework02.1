@@ -16,6 +16,7 @@
 ##CollectionDemo demonstrates all required functional
 
 ##IntegersCollection description:
+
 `com.homelearning.IntegersCollection implements java.util.Collection<Integer>`
 
 `public IntegersCollection()` - creates the `IntegersCollection` with default size of 16 elements.
